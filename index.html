@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lógicas Sunet</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+
+<body>
+
+    <style>
+        [type="radio"].wi
+        th-gap:checked+span:before,
+        [type="radio"].with-gap:checked+span:after {
+            border: 2px solid #f57c00;
+        }
+
+        [type="radio"].with-gap:checked+span:after {
+            background-color: #f57c00;
+        }
+
+        .select-wrapper input.select-dropdown {
+            font-size: 11px !important;
+        }
+    </style>
+
+
+    <div class="container">
+
+        <div class="center-align" style="margin-top: 20vh">
+            <div class="row">
+                <h5>Lógica de Preguntas</h5>
+            </div>
+
+            <div class="row" id="start">
+                <div class="col s6 offset-s3">
+                    <div class=" white" style="border-radius: 15px;">
+                        <div class="card-content black-text" style="border-radius: 15px;">
+                            <p>No se ha generado una lógica de preguntas para este formulario, comienza agregando una
+                                a continuación.</p>
+                        </div>
+                        <div class="card-action" style="border-radius: 15px;">
+                            <button class="btn btn-flat btn-large waves-effect waves-light orange darken-2 white-text"
+                                id="btnConfigurarLogica">Configurar Lógica
+                                <i class=" material-icons left">settings</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row" id="config" style="display: none;">
+
+                <div class="chip">
+                    Formulario: 165435
+                </div>
+                <div class="col-s12">
+
+                    <ul class="collapsible popout" id="logicas">
+                    </ul>
+
+
+                    <button class="btn btn-flat btn-large white waves-effect waves-orange" id="btnAgregarLogica">Agregar Lógica
+                        <i class=" material-icons left">add_circle</i>
+                    </button>
+
+                    <button class="btn btn-flat btn-large white waves-effect waves-orange"
+                        id="btnFinalizarConfiguracion">Finalizar Configuración
+                        <i class=" material-icons left">check</i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!--  Templates -->
+
+        <template id="templateLogica">
+            <div class="collapsible-header"></div>
+            <div class="collapsible-body">
+
+                <div class="acciones">
+                    <button class="btn btn-flat white waves-effect waves-orange agregar-condicion">Agregar
+                        Condición
+                        <i class=" material-icons left">add_circle</i>
+                    </button>
+
+                    <button class="btn btn-flat white waves-effect waves-orange eliminar-logica">Eliminar
+                        Lógica
+                        <i class=" material-icons left">delete</i>
+                    </button>
+                </div>
+
+                <div class="body">
+
+                </div>
+
+                <div class="divider" style="margin-top: 10px;"></div>
+
+                <div class="establecer" style="display:flex; justify-content: space-evenly; align-items: center;">
+
+                    <div style="width: 45%;">
+                        <p style="font-size: 11px;">
+                            <label style="margin-right: 5px;">
+                                <input class="with-gap" name="chkEstablecer" type="radio" style="margin: 0;"
+                                    value="1" />
+                                <span style="font-size: 11px;">Ocultar</span>
+                            </label>
+
+                            <label style="margin-right: 5px;">
+                                <input class="with-gap" name="chkEstablecer" type="radio" value="2" checked />
+                                <span style="font-size: 11px;">Mostrar</span>
+                            </label>
+
+                            <label>
+                                <input class="with-gap" name="chkEstablecer" type="radio" value="3" />
+                                <span style="font-size: 11px;">Saltar</span>
+                            </label>
+                        </p>
+                    </div>
+
+                    <div style="width: 45%;">
+                        <select style="font-size: 11px !important;">
+                            <option disabled selected>Selecciona una pregunta</option>
+                            <option value="0">Option 1</option>
+                        </select>
+                        <label>Pregunta</label>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </template>
+
+        <!--  Logica Template -->
+
+        <template id="templateCondicion">
+            <div class="condicion" style="display:flex; justify-content: space-evenly; align-items: center;">
+                <div class="eliminar" style="width: 10%;">
+                    <button class="btn btn-flat white waves-effect waves-orange tooltipped eliminar-condicion"
+                        data-position="bottom" data-tooltip="Eliminar">
+                        <i class="small material-icons eliminar-condicion">delete</i>
+                    </button>
+                </div>
+                <div class="pregunta" style="width: 25%;">
+                    <select>
+                        <option value="" disabled selected>Selecciona una pregunta</option>
+                        <option value="0">.......</option>
+                    </select>
+                    <label>Pregunta</label>
+                </div>
+                <div class="respuesta" style="width: 25%;">
+                    <select>
+                        <option value="" disabled selected>Selecciona una respuesta</option>
+                        <option value="0">......</option>
+                    </select>
+                    <label>Respuesta</label>
+                </div>
+                <div class="seleccion" style="width: 25%;">
+                    <select>
+                        <option value="0" disabled selected>Selección</option>
+                        <option value="1">Seleccionada</option>
+                    </select>
+                    <label>Respuesta</label>
+                </div>
+            </div>
+        </template>
+
+        <template id="templateOperador">
+
+            <p>
+                <label style="margin-right: 20px;">
+                    <input class="with-gap" type="radio" />
+                    <span style="font-size: 11px">OR</span>
+                </label>
+
+                <label>
+                    <input class="with-gap" type="radio" />
+                    <span style="font-size: 11px">AND</span>
+                </label>
+            </p>
+
+        </template>
+
+
+        <!--  Condicion Template -->
+
+    </div>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/logica/logicaFormulario.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+<script>
+
+    const btnAgregarLogica = document.querySelector('#btnAgregarLogica');
+    const btnConfigurarLogica = document.querySelector('#btnConfigurarLogica');
+    const btnFinalizarConfiguracion = document.querySelector('#btnFinalizarConfiguracion');
+    const logicas = document.querySelector('#logicas');
+    const templateLogica = document.querySelector('#templateLogica').content;
+    const templateCondicion = document.querySelector('#templateCondicion').content;
+    const templateOperador = document.querySelector('#templateOperador').content;
+    const fragment = document.createDocumentFragment();
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        M.AutoInit();
+    });
+
+
+    logicas.addEventListener('click', e => {
+        nuevaCondicion(e);
+    });
+
+    btnConfigurarLogica.addEventListener('click', e => {
+
+        const start = document.querySelector('#start'),
+            config = document.querySelector('#config');
+
+        start.style.display = 'none';
+        config.style.display = 'block';
+    });
+
+    btnAgregarLogica.addEventListener('click', e => {
+
+
+        const logicas = document.querySelector('#logicas');
+        let contadorLogicas = logicas.querySelectorAll('.logica').length == 0 ?  1 : logicas.querySelectorAll('.logica').length + 1; 
+
+
+        const nuevaLogica = document.createElement('li');
+        nuevaLogica.id = 'logica-' + contadorLogicas;
+        nuevaLogica.classList.add('logica');
+        templateLogica.children[0].id = 'logica-header-' + contadorLogicas;
+        templateLogica.children[1].children[1].id = 'logica-body-' + contadorLogicas;
+        templateLogica.querySelector('#logica-header-' + contadorLogicas).innerHTML = `<i class="material-icons">wrap_text</i>Lógica ${contadorLogicas}`
+        templateLogica.querySelectorAll('button')[0].id = 'btnAgregarCondicion-' + contadorLogicas;
+        templateLogica.querySelectorAll('button')[0].dataset.idlogica = contadorLogicas;
+        templateLogica.querySelectorAll('button')[0].setAttribute('onclick','pruebaUno()');      
+        templateLogica.querySelectorAll('button')[1].id = 'btnEliminarLogica-' + contadorLogicas;
+        templateLogica.querySelectorAll('button')[1].dataset.idlogica = contadorLogicas;
+        templateLogica.querySelectorAll('.with-gap')[0].name = 'chkAccion-' + contadorLogicas;
+        templateLogica.querySelectorAll('.with-gap')[1].name = 'chkAccion-' + contadorLogicas;
+        templateLogica.querySelectorAll('.with-gap')[2].name = 'chkAccion-' + contadorLogicas;
+        templateLogica.querySelectorAll('select')[0].id = 'preguntaAfectada-' + contadorLogicas;
+        const clone = templateLogica.cloneNode(true);
+        fragment.appendChild(clone);
+        nuevaLogica.appendChild(fragment);
+        logicas.appendChild(nuevaLogica);
+
+
+        M.AutoInit();
+
+    });
+
+
+    const nuevaCondicion = e => {
+
+        if (e.target.classList.contains('agregar-condicion')) {
+
+            const condiciones = document.querySelector('#logica-body-' + e.target.dataset.idlogica);
+            let contadorCondiciones = condiciones.querySelectorAll('.section').length == 0 ?  1 : condiciones.querySelectorAll('.section').length + 1; 
+
+            const nuevaCondicion = document.createElement('div');
+            nuevaCondicion.classList.add('section');
+            nuevaCondicion.dataset.id = contadorCondiciones;
+            nuevaCondicion.id = 'condicion-' + contadorCondiciones;
+            templateCondicion.querySelector('button').id = 'btnEliminarCondicion-' + contadorCondiciones;
+            templateCondicion.querySelector('button').dataset.idlogica = e.target.dataset.idlogica;
+            templateCondicion.querySelector('button').dataset.idcondicion = contadorCondiciones;
+            templateCondicion.querySelector('i').dataset.idlogica = e.target.dataset.idlogica;
+            templateCondicion.querySelector('i').dataset.idcondicion = contadorCondiciones;
+            const clone = templateCondicion.cloneNode(true);
+            fragment.appendChild(clone);
+            nuevaCondicion.appendChild(fragment);
+            condiciones.appendChild(nuevaCondicion);
+
+
+            const nuevoOperador = document.createElement('div');
+            nuevoOperador.classList.add('operador');
+            nuevoOperador.id = 'operador-' + contadorCondiciones;
+            const cloneOperador = templateOperador.cloneNode(true);
+            fragment.appendChild(cloneOperador);
+            nuevoOperador.appendChild(fragment)
+            condiciones.appendChild(nuevoOperador);
+
+            nuevaCondicion.addEventListener('click', e => {
+                eliminarCondicion(e);
+            });
+
+            nuevaCondicion.querySelectorAll('select')[0].id = 'pregunta-' + contadorCondiciones;
+            nuevaCondicion.querySelectorAll('select')[0].dataset.idlogica = e.target.dataset.idlogica;
+            nuevaCondicion.querySelectorAll('select')[0].name = `arrPreguntas-${e.target.dataset.idlogica}[]`;
+            nuevaCondicion.querySelectorAll('select')[1].id = 'respuesta-' + contadorCondiciones;
+            nuevaCondicion.querySelectorAll('select')[1].name = `arrRespuestas-${e.target.dataset.idlogica}[]`;
+            nuevaCondicion.querySelectorAll('select')[2].id = 'seleccion-' + contadorCondiciones;
+            nuevaCondicion.querySelectorAll('select')[2].name = `arrSelecciones-${e.target.dataset.idlogica}[]`;
+
+
+            if (contadorCondiciones == 1) {
+
+                condiciones.querySelectorAll('.section')[contadorCondiciones - 1].nextElementSibling.style.display = 'none';
+
+            }else {
+
+
+                if (contadorCondiciones % 2 == 0) {
+
+                    condiciones.querySelectorAll('.section')[contadorCondiciones - 1].previousElementSibling.style.display = 'block';
+                    condiciones.querySelectorAll('.section')[contadorCondiciones - 1].nextElementSibling.style.display = 'none';
+
+                } else {
+
+                    condiciones.querySelectorAll('.section')[contadorCondiciones - 1].previousElementSibling.style.display = 'block';
+                    condiciones.querySelectorAll('.section')[contadorCondiciones - 1].nextElementSibling.style.display = 'none';
+
+                }
+
+            }
+
+
+            M.AutoInit();
+        }
+
+        if (e.target.classList.contains('eliminar-logica')) {
+
+            const logica = document.querySelector('#logica-' + e.target.dataset.idlogica);
+            logicas.removeChild(logica);
+
+            logicas.querySelectorAll('.logica').forEach((logica, index) => {
+
+                logica.querySelector('.collapsible-header').innerHTML = `<i class="material-icons">wrap_text</i>Lógica ${index + 1}`;
+
+            });
+
+            M.toast({ html: '<i class="material-icons">check_circle</i>&nbsp;Lógica Eliminada Correctamente', classes: 'orange darken-1' });
+
+
+        }
+
+    }
+
+
+    const eliminarCondicion = (e) => {
+
+        if (e.target.classList.contains('eliminar-condicion')) {
+
+            const condiciones = document.querySelector('#logica-body-' + e.target.dataset.idlogica);
+            let contadorCondiciones = condiciones.querySelectorAll('.section').length;
+
+
+            if (contadorCondiciones == 1) {
+
+
+                const condicion = condiciones.querySelector('#condicion-' + contadorCondiciones);
+                condiciones.removeChild(condicion);
+
+
+
+            } else {
+
+                if ((contadorCondiciones - 1) % 2 == 0) {
+
+                    const condicion = condiciones.querySelector('#condicion-' + contadorCondiciones);
+
+                    if(condicion.nextElementSibling != null && condicion.previousElementSibling != null){
+                        
+                        condicion.previousElementSibling.remove();
+                        condicion.nextElementSibling.remove();
+                        condiciones.removeChild(condicion);
+
+                    }else if(condicion.nextElementSibling != null && condicion.previousElementSibling == null){
+
+                        condicion.nextElementSibling.remove();
+                        condiciones.removeChild(condicion);
+
+                    }else if(condicion.nextElementSibling == null && condicion.previousElementSibling != null){
+
+                        condicion.previousElementSibling.remove();
+                        condiciones.removeChild(condicion);
+
+                    }else{
+
+                        condiciones.removeChild(condicion);
+                    }
+
+                } else {
+
+                    const condicion = condiciones.querySelector('#condicion-' + contadorCondiciones);
+                    condicion.previousElementSibling.remove();
+                    condiciones.removeChild(condicion);
+
+                }
+
+            }
+
+
+            M.toast({ html: '<i class="material-icons">check_circle</i>&nbsp;Condición Eliminada Correctamente', classes: 'orange darken-1', displayLength: 1000 });
+
+        }
+    }
+
+    btnFinalizarConfiguracion.addEventListener('click', (e) => {
+
+
+        let arrPreguntas = [], arrRespuestas = [], arrCondiciones = [], arrGeneral = [];
+        let objLogica = {}, objFormulario = {};
+
+        objFormulario.idFormulario = 1;
+        objFormulario.logicas = [];
+
+        const logicas = document.querySelector('#logicas');
+        let contadorLogicas = logicas.querySelectorAll('.logica').length == 0 ?  1 : logicas.querySelectorAll('.logica').length; 
+
+        console.log(contadorLogicas)
+
+        for (let i = 1; i <= contadorLogicas; i++) {
+
+            let preguntas = document.getElementsByName(`arrPreguntas-${i}[]`),
+                respuestas = document.getElementsByName(`arrRespuestas-${i}[]`),
+                selecciones = document.getElementsByName(`arrSelecciones-${i}[]`);
+
+            for (let j = 0; j < preguntas.length; j++) {
+
+
+                objCondicion = {};
+                objCondicion.idlogica = preguntas[j].dataset.idlogica;
+                objCondicion.pregunta = preguntas[j].id;
+                objCondicion.respuesta = respuestas[j].id;
+                objCondicion.seleccion = selecciones[j].id;
+
+                arrCondiciones.push(objCondicion);
+
+            }
+
+        }
+
+        if (arrCondiciones.length == 1) {
+
+            M.toast({ html: '<i class="material-icons">warning</i>&nbsp;Debes agregar 2 condiciones', classes: 'orange darken-1' });
+
+            return
+        }
+
+
+        console.log(arrCondiciones)
+
+
+        condicionesLogica = arrCondiciones.reduce((prev, logica) => {
+
+            if (!prev[logica.idlogica]) {
+                prev[logica.idlogica] = []
+            }
+
+            prev[logica.idlogica].push(logica)
+
+            return prev;
+
+        }, {});
+
+
+
+        for (let i = 0; i < Object.keys(condicionesLogica).length; i++) {
+
+            if (Object.entries(condicionesLogica)[i][0] == (i+1)){
+
+                let accion = document.querySelector(`input[name='chkAccion-${(i + 1)}']:checked`);
+                let preguntaAfectada = document.querySelector(`#preguntaAfectada-${(i + 1)}`);
+
+                objLogica = {};
+                objLogica.idlogica = (i + 1);
+                objLogica.logicaConfigurada = Object.entries(condicionesLogica)[i][1];
+                objLogica.accionRequisitos = accion.value;
+                objLogica.preguntaAfectada = preguntaAfectada.id;
+                objFormulario.logicas.push(objLogica);
+
+                
+            }
+        }
+
+
+
+        arrGeneral.push(objFormulario)
+    
+
+        console.log(arrGeneral)
+
+
+
+    });
+
+
+
+</script>
+
+</html>

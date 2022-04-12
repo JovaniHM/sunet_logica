@@ -1,0 +1,409 @@
+<html
+    class="js svg wf-opensans-i3-active wf-opensans-n4-active wf-opensans-n3-active wf-opensans-n6-active wf-opensans-n7-active wf-opensans-i4-active wf-active">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Consulta Ciudadana</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js" type="text/javascript" async=""></script>
+    <script async="" src="//www.google-analytics.com/analytics.js"></script>
+    <script src="https://framework-gb.cdn.gob.mx/assets/scripts/plugins.js"></script>
+    <script src="https://framework-gb.cdn.gob.mx/assets/scripts/main.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- CSS -->
+    <link href="/favicon.ico" rel="shortcut icon">
+    <link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
+
+    <!-- Respond.js soporte de media queries para Internet Explorer 8 -->
+    <!-- ie8.js EventTarget para cada nodo en Internet Explorer 8 -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/ie8/0.2.2/ie8.js"></script>
+    <![endif]-->
+
+
+
+
+    <!-- <script type="text/javascript" src="/ciudadania/common/js/ciudadania.js"></script> -->
+    <script src="/REPUVE/app.js"></script>
+
+    <script type="text/javascript">
+        function setValores() {
+
+
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var msg = 'null';
+            if (msg !== null && msg !== "" && msg === "null") {
+                $("#modalReemplacamiento").modal("show");
+            } else {
+                $("#modalReemplacamiento").modal("hide");
+            }
+        });
+    </script>
+    <script type="text/javascript" src="https://framework-gb.cdn.gob.mx/assets/scripts/vendor/modernizr.js"></script>
+    <script type="text/javascript" src="https://framework-gb.cdn.gob.mx/assets/scripts/vendor/pace.min.js"></script>
+    <link rel="stylesheet"
+        href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600,700&amp;subset=latin"
+        media="all">
+    <script type="text/javascript" src="https://framework-gb.cdn.gob.mx/assets/scripts/vendor/analitycs.js"></script>
+</head>
+
+<body onload="setValores();" class="pace-done" style="">
+    <header>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#navbarMainCollapse"><span class="sr-only">Interruptor de Navegación</span><span
+                            class="icon-bar"></span><span class="icon-bar"></span><span
+                            class="icon-bar"></span></button><a class="navbar-brand" href="https://www.gob.mx/"><img
+                            src="https://framework-gb.cdn.gob.mx/landing/img/logoheader.svg" width="128" height="48"
+                            alt="Página de inicio, Gobierno de México"></a></div>
+                <div class="collapse navbar-collapse" id="navbarMainCollapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="https://www.gob.mx/tramites">Trámites</a></li>
+                        <li><a href="https://www.gob.mx/gobierno">Gobierno</a></li>
+                        <li><a href="https://www.gob.mx/busqueda"><span class="sr-only">Búsqueda</span><i
+                                    class="icon-search"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="pace  pace-inactive">
+        <div class="pace-progress" data-progress-text="100%" data-progress="99"
+            style="transform: translate3d(100%, 0px, 0px);">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </div>
+
+    <main class="page">
+        <form class="form" name="form1" id="form12" method="post" action="http://www2.repuve.gob.mx:8080/ciudadania/servletconsulta">
+            <!-- Contenido -->
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li><a href="https://www.gob.mx/segob/"><i class="icon icon-home"></i></a></li>
+                    <li class="active"><a>Consulta Ciudadana</a></li>
+                </ol>
+                <h3>
+                    Consulta Ciudadana
+                </h3>
+                <hr class="red">
+                <div class="col-md-8">
+
+
+                    <!--Contenido-->
+                    <div class="row" id="alertasErrores" hidden="">
+                        <div class="alert alert-danger" id="txtError">
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="alert alert-info">
+                            <strong>
+                                POR FAVOR, INGRESE SÓLO UN CRITERIO DE BÚSQUEDA
+                            </strong>
+                        </div>
+                    </div>
+                    <br>
+
+                    <style>
+                        .pointer {
+                            cursor: pointer;
+                        }
+                    </style>
+
+                    <div class="row" formulario="">
+
+                        <div class="form-group">
+                            <label class="control-label">Número de Placa (Sin guiones ni espacios):</label>
+                            <input class="form-control" id="placa" name="placa" type="text">
+                            <div class="help-block with-errors" id="mensajeNrpv"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Número de Identificación Vehicular (NIV): <span
+                                    class="glyphicon glyphicon-question-sign pointer" data-placement="right"
+                                    data-toggle="modal" data-target="#modalNIV"></span></label>
+                            <input class="form-control" id="vin" name="vin" type="text">
+                            <div class="help-block with-errors" id="mensajeNrpv"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Folio de Constancia de Inscripción: <span
+                                    class="glyphicon glyphicon-question-sign pointer" data-placement="right"
+                                    data-toggle="modal" data-target="#modalFolio"></span></label>
+                            <input class="form-control" id="folio" name="folio" type="text">
+                            <div class="help-block with-errors" id="mensajeNrpv"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Número de Constancia de Inscripción (si lo tiene): <span
+                                    class="glyphicon glyphicon-question-sign pointer" data-placement="right"
+                                    data-toggle="modal" data-target="#modalNCI"></span></label>
+                            <input class="form-control" id="nrpv" name="nrpv" type="text">
+                            <div class="help-block with-errors" id="mensajeNrpv"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4" style="text-align:center;">
+                                <img src="/ciudadania/jcaptcha" alt="Captcha">
+                            </div>
+                            <div class="col-md-8" style="padding-left:0;padding-right:0;">
+                                <label class="control-label">Texto imagen<span id="astcaptcha">*</span>: </label>
+                                <input class="form-control" id="captcha" name="captcha" type="text">
+                                <div class="help-block with-errors" id="mensajeNrpv"></div>
+                                <p>Por favor, con letras minúsculas capture el texto que ve en la imagen</p>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-4">
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="pull-left text-muted text-vertical-align-button">
+                                * Campos obligatorios
+                            </div>
+
+                            <div class="pull-right">
+                                <button class="btn btn-default" type="button"
+                                    onclick="javascript:window.close();">Cerrar</button>
+                                <button class="btn btn-primary" type="button" onclick="buscar();">Buscar</button>
+                            </div>
+                        </div>
+                        <input type="hidden" name="pageSource" value="index.jsp">
+
+                        <br>
+                    </div>
+                    <br>
+                    <div class="row" id="alertasErrores">
+                        <div class="alert alert-info">
+                            <strong>
+                                <p class="text-center">
+                                    Este servicio de consulta es
+                                    <em>
+                                        GRATUITO
+                                    </em> de acuerdo con el Artículo 6&nbsp;de la Ley del Registro Público Vehicular.
+                                </p>
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="row"> <strong>
+                            <p class="text-center">¿Desea hacer una consulta en su teléfono celular?. <br>Descarga
+                                gratis la app de ChecAuto MX.</p>
+                        </strong>
+                        <table border="0" cellpadding="0" cellspacing="5" align="center"
+                            style="margin-bottom:-5px; margin-top:-20px;">
+                            <tbody>
+                                <tr>
+                                    <td><a href="https://play.google.com/store/apps/details?id=mx.gob.cns.consultaciudadana"
+                                            target="_blank"><img src="/ciudadania/common/img/google-play-badge.png"
+                                                alt="Disponible en Google Play" width="185" height="75"></a></td>
+                                    <td><a href="https://itunes.apple.com/mx/app/checauto/id1307256031?mt=8"
+                                            target="_blank"><img src="/ciudadania/common/img/App_Store_Badge_ESMX.png"
+                                                alt="Descárgalo en el App Store" width="185" height="53"></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modalNIV" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h4 class="modal-title">Número de Identificación Vehicular (NIV)</h4>
+                        </div>
+                        <div class="modal-body" style="text-align:center;">
+                            <p>Es el número conformado por diecisiete caracteres alfanuméricos que identifican a los
+                                vehículos de modelos posteriores a 1998, se encuentra normalmente en la parte superior
+                                del tablero del vehículo ó en el marco de las puertas, generalmente en el lado del
+                                chofer, <strong>además de que también se puede obtener de la factura o tarjeta de
+                                    circulación del vehículo. </strong> En los modelos anteriores a 1998 a este número
+                                se le conocía como serie y es más común que se encuentre localizado en la puerta
+                                izquierda del vehículo" como la imagen siguiente: <br><br><img
+                                    src="/ciudadania/common/img/VIN-Fto.jpg" width="212" height="180"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modalFolio" role="dialog">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h4 class="modal-title">Folio de Constancia de Inscripción</h4>
+                        </div>
+                        <div class="modal-body" style="text-align:center;">
+                            <p>Es el número de chip con el que se encuentra registrado el vehículo.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modalNCI" role="dialog">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h4 class="modal-title">Número de Constancia de Inscripción</h4>
+                        </div>
+                        <div class="modal-body" style="text-align:center;">
+                            <p>Es el número único e irrepetible conformado por 8 caracteres alfanuméricos que le es
+                                asignado a un vehículo una vez que este fue inscrito en el Registro Público Vehicular.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" data-refresh="true">
+                <div class="modal-dialog">
+                    <div class="alert alert-danger col-md-8 col-md-offset-2 col-xs-6 col-xs-offset-3">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">Close</span></button>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal FallaOcra-->
+            <div class="modal fade" id="modalReemplacamiento" role="dialog" style="display: none;">
+                <div class="modal-dialog modal-lg" style="margin-top: 663px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h4 class="modal-title">
+                                <p align="center">AVISO IMPORTANTE<br><br></p>
+                            </h4>
+                        </div>
+                        <div class="modal-body" style="text-align:justify;">
+
+                            <p><b>EL REGISTRO PÚBLICO VEHICULAR informa, que ya está
+
+
+                                    en funcionamiento el número</b>
+
+                            </p>
+                            <center><br>
+                                <font size="4" color="red">800 REPUVE 1 (800-737-883-1)</font>
+                            </center> <br>
+
+
+                            <b>Por una mejor atención a la Ciudadanía
+                                y Sujetos Obligados, por su comprensión gracias.</b>
+
+                            <p></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </main>
+    <script>
+        window.onload = verMensaje();
+
+        function verMensaje() {
+            var msg = 'null';
+            if (msg != null && !msg == "" && msg !== "null") {
+                document.getElementById("alertasErrores").style.display = 'block';
+                document.getElementById("captcha").style.borderColor = 'red';
+                document.getElementById("astcaptcha").style.color = 'red';
+            }
+        }
+    </script>
+
+
+    <script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
+
+    <footer class="main-footer">
+        <div class="list-info">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3"><img data-v-9e928f9a=""
+                            src="https://framework-gb.cdn.gob.mx/landing/img/logoheader.svg" href="/"
+                            alt="logo gobierno de méxico" class="logo_footer" style="max-width: 90%;"></div>
+                    <div class="col-sm-3">
+                        <h5>Enlaces</h5>
+                        <ul>
+                            <li><a href="https://participa.gob.mx" target="_blank" rel="noopener"
+                                    title="Enlace abre en ventana nueva">Participa</a></li>
+                            <li><a href="https://www.gob.mx/publicaciones" target="_blank" rel="noopener"
+                                    title="Enlace abre en ventana nueva">Publicaciones Oficiales</a></li>
+                            <li><a href="http://www.ordenjuridico.gob.mx" target="_blank" rel="noopener"
+                                    title="Enlace abre en ventana nueva">Marco Jurídico</a></li>
+                            <li><a href="https://consultapublicamx.inai.org.mx/vut-web/" target="_blank" rel="noopener"
+                                    title="Enlace abre en ventana nueva">Plataforma Nacional de Transparencia</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3">
+                        <h5>¿Qué es gob.mx?</h5>
+                        <p>Es el portal único de trámites, información y participación ciudadana. <a
+                                href="https://www.gob.mx/que-es-gobmx">Leer más</a></p>
+                        <ul>
+                            <li><a href="https://datos.gob.mx">Portal de datos abiertos</a></li>
+                            <li><a href="https://www.gob.mx/accesibilidad">Declaración de accesibilidad</a></li>
+                            <li><a href="https://www.gob.mx/privacidadintegral">Aviso de privacidad integral</a></li>
+                            <li><a href="https://www.gob.mx/privacidadsimplificado">Aviso de privacidad simplificado</a>
+                            </li>
+                            <li><a href="https://www.gob.mx/terminos">Términos y Condiciones</a></li>
+                            <li><a href="https://www.gob.mx/terminos#medidas-seguridad-informacion">Política de
+                                    seguridad</a></li>
+                            <li><a href="https://www.gob.mx/sitemap">Mapa de sitio</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3">
+                        <h5><a
+                                href="https://www.gob.mx/tramites/ficha/presentacion-de-quejas-y-denuncias-en-la-sfp/SFP54">Denuncia
+                                contra servidores públicos</a></h5>
+                        <h5>Síguenos en</h5>
+                        <ul class="list-inline">
+                            <li><a class="social-icon facebook" target="_blank" rel="noopener"
+                                    title="Enlace abre en ventana nueva" href="https://www.facebook.com/gobmexico"
+                                    aria-label="Facebook de presidencia"></a></li>
+                            <li><a class="social-icon twitter" target="_blank" rel="noopener"
+                                    title="Enlace abre en ventana nueva" href="https://twitter.com/GobiernoMX"
+                                    aria-label="Twitter de presidencia"></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid footer-pleca">
+            <div class="row">
+                <div class="col"><br><br></div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
